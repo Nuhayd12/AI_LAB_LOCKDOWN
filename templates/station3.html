@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Lab Lockdown - Station 3</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <style>
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .modal-content {
+            position: relative;
+            margin: 10% auto;
+            padding: 20px;
+            background: white;
+            width: 50%;
+            text-align: center;
+            border-radius: 10px;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .hint-icon {
+            cursor: pointer;
+            display: block;
+            margin: 10px auto;
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Station 3: Data Discovery</h1>
+        <p>Analyze the data and find the hidden clue. Enter the correct result to proceed to the final step.</p>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <!-- Display the puzzle image -->
+            <img src="{{ url_for('static', filename='images/data_puzzles/' + image) }}" 
+                 alt="Data Puzzle" style="max-width: 100%; height: auto;">
+        </div>
+        
+        <!-- Hint Section -->
+        <div style="text-align: center; margin-top: 20px;">
+            <button onclick="showHintModal()" style="border: none; background: none;">
+                <img src="{{ url_for('static', filename='images/hint_bulb.png') }}" 
+                     alt="Hint" style="width: 50px; height: 50px; cursor: pointer;">
+            </button>
+        </div>
+        
+        <!-- Hint Modal -->
+        <div id="hintModal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5);">
+            <div style="background-color: white; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 400px; text-align: center;">
+                <span onclick="hideHintModal()" style="color: red; float: right; font-size: 24px; font-weight: bold; cursor: pointer;">&times;</span>
+                <!-- Display hint image, dynamically fetched -->
+                <img src="{{ url_for('static', filename='images/hints/' + hint) }}" 
+                     alt="Hint" style="max-width: 100%; height: auto;">
+            </div>
+        </div>
+
+        <form method="POST" action="/station3" style="margin-top: 20px;">
+            <label for="data-answer">Enter Data Interpretation Result:</label>
+            <input type="text" id="data-answer" name="data-answer" required>
+            <button type="submit">Submit</button>
+        </form>
+
+        <!-- Display feedback -->
+        {% if feedback %}
+        <div id="feedback" style="color: red; margin-top: 20px;">
+            <p>{{ feedback }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        // Handle hint modal
+        function showHintModal() {
+            document.getElementById("hintModal").style.display = "flex";
+        }
+
+        function hideHintModal() {
+            document.getElementById("hintModal").style.display = "none";
+        }
+
+        window.addEventListener('click', (e) => {
+            if (e.target === document.getElementById("hintModal")) {
+                hideHintModal();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan to Proceed - Station 3</title>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@v2.1.1/dist/tesseract.min.js"></script>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.6/minified/html5-qrcode.min.js"></script>
+    <div id="reader"></div>
+    <div class="container">
+        <h1>Scan the Code</h1>
+        <p>Point your camera at the word <strong>DATA</strong> to proceed.</p>
+        <div id="scanner-container"></div>
+        <div id="feedback" style="display:none;">Scanning Successful! Redirecting...</div>
+    </div>
+    <div>
+        <p>If scanning doesn't work, enter the code manually:</p>
+        <form method="POST" action="/scan3">
+            <input type="text" name="manual-code" placeholder="Enter code here"required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        const video = document.createElement("video");
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        const scannerContainer = document.getElementById("scanner-container");
+
+        // Start camera
+        navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
+            video.srcObject = stream;
+            video.play();
+            scannerContainer.appendChild(video);
+
+            // Analyze frames every second
+            setInterval(() => {
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                recognizeText(canvas);
+            }, 1000);
+        });
+
+        function recognizeText(canvas) {
+            Tesseract.recognize(canvas, "eng").then(({ data: { text } }) => {
+                console.log("Detected Text:", text.trim()); // Log what is detected
+                if (text.trim().toLowerCase().includes("data")) {
+                    stopCamera();
+                    document.getElementById("feedback").style.display = "block";
+                    setTimeout(() => (window.location.href = "/station3"), 2000);
+                }
+            }).catch((err) => {
+                console.error("Recognition Error:", err);
+            });
+        }
+
+        function stopCamera() {
+            video.srcObject.getTracks().forEach((track) => track.stop());
+        }
+
+        const qrCodeScanner = new Html5Qrcode("reader");
+        qrCodeScanner.start(
+            { facingMode: "environment" }, 
+            { fps: 10, qrbox: 250 },
+            (decodedText, decodedResult) => {
+                console.log(`Decoded text: ${decodedText}`);
+                if (decodedText.trim().toLowerCase() === "data") {
+                    qrCodeScanner.stop();
+                    document.getElementById("feedback").style.display = "block";
+                    setTimeout(() => (window.location.href = "/station3"), 2000);
+                }
+            },
+            (errorMessage) => {
+                console.error("QR Code Scan Error:", errorMessage);
+            }
+        );
+    </script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Step - Escape</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <script src="/static/js/script.js" defer></script>
+</head>
+<body>
+    <!-- Continue Screen -->
+    <div id="escape-container" class="container">
+        <h1>Press Continue to Escape the Lab</h1>
+        <button id="continue-btn">Continue</button>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="hidden">
+        <div class="loading-text">Loading...</div>
+    </div>
+
+    <!-- Final Code Entry Screen -->
+    <div id="final-code-container" class="hidden">
+        <div class="final-window">
+            <h1>Enter the Final Code to Escape</h1>
+            <form id="final-code-form" method="POST" action="/validate_final_code">
+                <label for="final-code">Final Code:</label>
+                <input type="text" id="final-code" name="final-code" required>
+                <button type="submit">Submit</button>
+            </form>
+            <div id="code-feedback"></div>
+        </div>
+    </div>
+
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #1e1e2f;
+            color: #fff;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 20%;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Loading Screen */
+        .loading-text {
+            font-size: 2em;
+            color: #fff;
+            text-align: center;
+            margin-top: 40vh;
+        }
+
+        /* Final Code Section */
+        .final-window {
+            text-align: center;
+            background: #fff;
+            color: #000;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 300px;
+            margin: 10% auto;
+        }
+
+        button {
+            background-color: #5c67f2;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #4750c0;
+        }
+    </style>
+</body>
+<script>
+    // JavaScript for the transitions
+    document.getElementById("continue-btn").onclick = function () {
+        // Hide the continue section
+        document.getElementById("escape-container").classList.add("hidden");
+
+        // Show the loading screen
+        document.getElementById("loading-screen").classList.remove("hidden");
+
+        // After 5 seconds, show the final code section
+        setTimeout(() => {
+            document.getElementById("loading-screen").classList.add("hidden");
+            document.getElementById("final-code-container").classList.remove("hidden");
+        }, 5000);
+    };
+</script>
+</html>

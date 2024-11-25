@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Lab Lockdown - Station 2</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <p>Welcome to Station 2</p>
+        <p>Solve the logic puzzle to proceed:</p>
+        <p><strong>Logic Puzzle:</strong></p>
+        
+        <!-- Display the puzzle image here -->
+        <img src="{{ url_for('static', filename='logic_puzzle.jpg') }}" alt="Logic Puzzle" style="max-width: 50%; height: auto; margin-top: 20px;">
+        
+        <form method="POST" action="/station2">
+            <label for="logic-answer">Your Answer:</label>
+            <input type="text" id="logic-answer" name="logic-answer" required>
+            <button type="submit">Submit</button>
+        </form>
+
+        <!-- Display feedback messages -->
+        {% if feedback %}
+            <div class="correct-box">
+                <p>Correct! Proceed to the Next Station</p>
+                <a href="/scan3" style="font-weight: bold;">Go to station 3</a>
+            </div>
+        {% else %}
+            <div class="feedback">
+                <p>{{ feedback }}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

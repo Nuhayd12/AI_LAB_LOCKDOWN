@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Lab Lockdown</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to AI Lab Lockdown</h1>
+        <p id="story"></p>
+        <button id="proceed-btn" style="display:none;" onclick="startScanning()">Proceed to Station 1</button>
+    </div>
+    <script>
+        // Typing animation for the story
+        const storyText = "You are now entering the AI Research Facility. Our central AI, Project Sentinel, has gone rogue, locking us all inside. Your mission: solve the puzzles, unlock the doors, and shut it down. But beware—time is ticking!";
+        let i = 0;
+        function typeStory() {
+            if (i < storyText.length) {
+                document.getElementById("story").innerHTML += storyText.charAt(i);
+                i++;
+                setTimeout(typeStory, 50); // Adjust typing speed
+            } else {
+                document.getElementById("proceed-btn").style.display = "block"; // Show button after typing finishes
+            }
+        }
+        window.onload = typeStory;
+
+        // Open scanner when the button is pressed
+        function startScanning() {
+            window.location.href = "/scan"; // Navigate to scan page
+        }
+    </script>
+</body>
+</html>

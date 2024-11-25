@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victory</title>
+    <style>
+        body {
+            margin: 0;
+            background: #1e1e2f;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .door-animation {
+            display: flex;
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .door {
+            flex: 1;
+            background: linear-gradient(to bottom, #444, #222);
+            height: 100%;
+            transition: transform 2s ease-in-out;
+            position: relative;
+        }
+
+        .door-left {
+            transform-origin: right;
+        }
+
+        .door-right {
+            transform-origin: left;
+        }
+
+        .door.open.door-left {
+            transform: rotateY(-90deg);
+        }
+
+        .door.open.door-right {
+            transform: rotateY(90deg);
+        }
+
+        .message-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out 2.5s;
+        }
+
+        .message-container.visible {
+            opacity: 1;
+        }
+
+        .typing-text {
+            font-size: 2em;
+            color: #fff;
+            overflow: hidden;
+            border-right: 2px solid white;
+            white-space: nowrap;
+            animation: typing 4s steps(30, end), blink 1s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            color: black;
+            width: 60%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .modal-content a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            border-radius: 4px;
+        }
+
+        .modal-content a:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <!-- Door Animation -->
+    <div class="door-animation">
+        <div class="door door-left"></div>
+        <div class="door door-right"></div>
+    </div>
+
+    <!-- Victory Message -->
+    <div class="message-container">
+        <div class="typing-text">
+            System Shutdown Initiated! <br> Project Sentinel has been neutralized. <br> You have saved the lab!
+        </div>
+    </div>
+
+    <!-- Party Popper Animation -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        window.onload = function () {
+            const doors = document.querySelectorAll(".door");
+            const messageContainer = document.querySelector(".message-container");
+            const modal = document.querySelector(".modal");
+
+            // Step 1: Open the doors
+            setTimeout(() => {
+                doors.forEach(door => door.classList.add("open"));
+            }, 500);
+
+            // Step 2: Show the victory message after doors open
+            setTimeout(() => {
+                messageContainer.classList.add("visible");
+
+                // Step 3: Trigger confetti animation
+                triggerConfetti();
+
+                // Step 4: After 5 seconds, blackout screen and show modal
+                setTimeout(() => {
+                    blackoutScreen();
+                    modal.style.display = "flex"; // Show the modal
+                }, 10000); // 5-second delay after message
+            }, 5000); // 2 seconds for doors + 0.5s buffer
+        };
+
+        // Function to trigger confetti animation
+        function triggerConfetti() {
+            const confettiSettings = {
+                particleCount: 100,
+                spread: 70,
+                origin: { x: 0.5, y: 1 }, // Start from the bottom center
+            };
+
+            // Fire confetti bursts from the sides
+            setTimeout(() => {
+                confetti({ ...confettiSettings, angle: 60, origin: { x: 0 } });
+                confetti({ ...confettiSettings, angle: 120, origin: { x: 1 } });
+            }, 0);
+
+            // Fire additional bursts for effect
+            setTimeout(() => {
+                confetti({ ...confettiSettings, angle: 60, origin: { x: 0 } });
+                confetti({ ...confettiSettings, angle: 120, origin: { x: 1 } });
+            }, 500);
+
+            setTimeout(() => {
+                confetti({ ...confettiSettings, angle: 60, origin: { x: 0 } });
+                confetti({ ...confettiSettings, angle: 120, origin: { x: 1 } });
+            }, 1000);
+        }
+
+        // Function to blackout the screen
+        function blackoutScreen() {
+            document.body.style.backgroundColor = "black";
+            document.body.style.color = "black";
+        }
+    </script>
+
+    <!-- Floating Modal with Google Form Link -->
+    <div class="modal">
+        <div class="modal-content">
+            <h2>Congratulations!</h2>
+            <p>You've successfully completed the task. Please submit your team details using the form below:</p>
+            <!-- Replace the link below with your Google Form link -->
+            <a href="https://forms.gle/erTYKHfTBvCvakwr8" target="_blank">Go to the Form</a>
+        </div>
+    </div>
+</body>
+</html>

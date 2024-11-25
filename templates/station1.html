@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Lab Lockdown - Station 1</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <p>Welcome to Station 1</p>
+        <p>Decode the encrypted text to proceed:</p>
+        <p><strong>Encoded Text:</strong> {{ challenge["encoded"] }}</p>
+        <p><strong>Hint:</strong> {{ hint }}</p>
+        
+        <form id="station1-form" method="POST" action="/station1">
+            <label for="decoded-input">Enter Decoded Text:</label>
+            <input type="text" id="decoded-input" name="decoded-input" required>
+            <button type="submit">Submit</button>
+        </form>
+
+        <!-- Feedback for correct answer -->
+        {% if feedback %}
+        <div class="feedback">{{ feedback }}</div>
+        {% endif %}
+        
+        {% if feedback == "Correct!" %}
+        <!-- Green box for correct answer -->
+        <div class="correct-box">
+            <p>Correct! Proceed to the next station.</p>
+            <a href="/scan2" class="next-btn">Go to Station 2</a>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
