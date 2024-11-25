@@ -149,4 +149,6 @@ def validate_final_code():
         return render_template('final.html', feedback="Incorrect final code. Try again!")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    from waitress import serve  # Alternatively, Gunicorn or uWSGI
+    serve(app, host="0.0.0.0", port=5000)
+
