@@ -13,9 +13,9 @@ DATA_PUZZLE_FOLDER = "static/images/data_puzzles/"
 
 # Data puzzle mapping for Station 3
 data_puzzles = {
-    "puzzle1.png": {"answer": "21", "hint": "hint1.png"},
+    "puzzle1.png": {"answer": "24", "hint": "hint1.png"},
     "puzzle2.png": {"answer": "36", "hint": "hint2.png"},
-    "puzzle3.png": {"answer": "6", "hint": "hint3.png"},
+    "puzzle3.png": {"answer": "7", "hint": "hint3.png"},
     "puzzle4.png": {"answer": "69", "hint": "hint4.png"},
 }
 
@@ -149,6 +149,5 @@ def validate_final_code():
         return render_template('final.html', feedback="Incorrect final code. Try again!")
 
 if __name__ == "__main__":
-    from waitress import serve  # Alternatively, Gunicorn or uWSGI
-    serve(app, host="0.0.0.0", port=5000)
+    app.run(debug=True)
 
