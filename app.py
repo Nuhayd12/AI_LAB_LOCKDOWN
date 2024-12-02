@@ -79,7 +79,7 @@ def station1():
 def station2():
     if request.method == 'POST':
         answer = request.form.get('logic-answer', '').strip()
-        correct_answer = "2,1"
+        correct_answer = "7"
         if answer.replace(" ", "").replace(",", "").replace("and", "").strip() == correct_answer.replace(",", "").strip():
             session['station2_answer'] = correct_answer  # Save answer in session
             feedback = "Correct! Proceed to the Next Station"
