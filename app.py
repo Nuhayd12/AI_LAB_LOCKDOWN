@@ -62,8 +62,6 @@ def scan3():
         return render_template('scan3.html', feedback="Incorrect code. Try again!")
     return render_template('scan3.html')
 
-    return render_template('scan3.html')
-
 
 @app.route('/station1', methods=['GET', 'POST'])
 def station1():
