@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Required for session handling
 
 # Predefined Caesar cipher challenge for Station 1
-caesar_cipher = {"encoded": "oruhp lsvxp grlorv", "decoded": "lorem ipsum dolor", "hint": "Shift: 3 <-"}
+caesar_cipher = {"encoded": "oruhp lsvxp grlorv", "decoded": "lorem ipsum dolor", "hint": "Shift:3 <-"}
 
 # Path to data puzzle images for Station 3
 DATA_PUZZLE_FOLDER = "static/images/data_puzzles/"
