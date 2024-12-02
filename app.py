@@ -15,7 +15,7 @@ DATA_PUZZLE_FOLDER = "static/images/data_puzzles/"
 data_puzzles = {
     "puzzle1.png": {"answer": "24", "hint": "hint1.png"},
     "puzzle2.png": {"answer": "36", "hint": "hint2.png"},
-    "puzzle3.png": {"answer": "7", "hint": "hint3.png"},
+    "puzzle3.png": {"answer": "7s", "hint": "hint3.png"},
     "puzzle4.png": {"answer": "69", "hint": "hint4.png"},
 }
 
